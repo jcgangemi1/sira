@@ -27,9 +27,9 @@ class ColorListener():
 
         r = sr.Recognizer()
 
-        rospy.wait_for_service('/grasp_object/trigger_grasp_object')
-        rospy.loginfo('Node connected to /grasp_object/trigger_grasp_object.')
-        trigger_grasp_object_service = rospy.ServiceProxy('/grasp_object/trigger_grasp_object', Trigger)
+        # rospy.wait_for_service('/grasp_object/trigger_grasp_object')
+        # rospy.loginfo('Node connected to /grasp_object/trigger_grasp_object.')
+        # trigger_grasp_object_service = rospy.ServiceProxy('/grasp_object/trigger_grasp_object', Trigger)
 
         with sr.Microphone() as source:
             # record
@@ -47,7 +47,7 @@ class ColorListener():
                 print("Speech recognition error; {0}".format(e))
                 text_string = 0
 
-            rospy.loginfo('text string is: ' + text_string)
+            rospy.loginfo('text string is: ' + str(text_string))
 
             # execute
             if text_string == 0:
@@ -82,8 +82,9 @@ class ColorListener():
                         text_string = 0
 
                     if text_string != 0:
-                        if "pick" or "grab" or "grass" in text_string:
+                        if "pick" or "grab" or "grass" or "grasp" in text_string:
                             soundhandle = SoundClient()
+                            rospy.loginfo('GRASP')
                             rospy.sleep(1)
                             soundhandle.say(text="Yes, I can grab that for you!", voice = 'voice_kal_diphone', volume = 1.0)
                             rospy.sleep(1)
