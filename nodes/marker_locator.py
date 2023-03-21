@@ -89,6 +89,15 @@ class MarkerLocator(hm.HelloNode):
             message=message
         )
 
+    def clear_saved_locations_callback(self, request):
+        self.marker_tf = None
+        self.already_marker_scanned = False
+
+        return TriggerResponse(
+            success=True,
+            message=""
+        )
+
     def main(self):
         hm.HelloNode.main(self, 'marker_locator', 'marker_locator', wait_for_first_pointcloud=True)
 
@@ -100,6 +109,9 @@ class MarkerLocator(hm.HelloNode):
         rospy.Service('/marker_locator/marker_scan',
                       Trigger,
                       self.marker_scan_callback)
+        rospy.Service('/marker_locator/clear_saved_locations',
+                      Trigger,
+                      self.clear_saved_locations_callback)
         self.trigger_head_scan = rospy.ServiceProxy('/funmap/trigger_local_localization', Trigger)
 
         rate = rospy.Rate(self.rate)
