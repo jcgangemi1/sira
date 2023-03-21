@@ -22,4 +22,28 @@
     'use_rgb_only': False
     'name': 'unknown'
     'link': None
-    
+  '130':
+    'length_mm': 47
+    'use_rgb_only': False
+    'name': 'base_left'
+    'link': 'link_aruco_left_base'
+  '131':
+    'length_mm': 47
+    'use_rgb_only': False
+    'name': 'base_right'
+    'link': 'link_aruco_right_base'
+  '132':
+    'length_mm': 23.5
+    'use_rgb_only': False
+    'name': 'wrist_inside'
+    'link': 'link_aruco_inner_wrist'
+  '133':
+    'length_mm': 23.5
+    'use_rgb_only': False
+    'name': 'wrist_top'
+    'link': 'link_aruco_top_wrist'
+  '134':
+    'length_mm': 31.4
+    'use_rgb_only': False
+    'name': 'shoulder_top'
+    'link': 'link_aruco_shoulder'

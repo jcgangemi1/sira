@@ -5,14 +5,13 @@ import rospy
 import hello_helpers.hello_misc as hm
 import argparse
 
-
 # Messages
 from std_msgs.msg import Float32, Int8
 from visualization_msgs.msg import MarkerArray
 from geometry_msgs.msg import TransformStamped
 
 #Triggers
-from std_srvs.srv import Trigger, TriggerRequest, TriggerResponse
+from cyra.srv import GetMarkerLocation, GetMarkerLocationRequest, GetMarkerLocationResponse
 
 
 class MarkerLocator(hm.HelloNode):
@@ -22,13 +21,18 @@ class MarkerLocator(hm.HelloNode):
         # Config
         self.rate = 10
         self.marker_name = marker_name
+        self.marker_tf = None
 
-    def marker_callback(self, markers):
-        #rospy.loginfo(markers)
-        for marker in markers.markers:
+    def marker_callback(self, marker_array_msg):
+        rospy.logdebug("MarkerArray Message: ")
+        rospy.logdebug(marker_array_msg)
+        for marker in marker_array_msg.markers:
             if marker.text == self.marker_name:
-                t = self.get_tf('map', self.marker_name)
-                rospy.loginfo("FOUND MARKER: " +t)
+                marker_transform_stamped_msg = self.get_tf('map', self.marker_name)
+                rospy.logdebug("FOUND MARKER: ")
+                rospy.logdebug(marker_transform_stamped_msg)
+                self.marker_tf = marker_transform_stamped_msg
+
 
     def main(self):
         hm.HelloNode.main(self, 'marker_locator', 'marker_locator', wait_for_first_pointcloud=True)

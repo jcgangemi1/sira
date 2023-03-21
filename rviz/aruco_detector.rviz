@@ -3,7 +3,8 @@ Panels:
     Help Height: 78
     Name: Displays
     Property Tree Widget:
-      Expanded: ~
+      Expanded:
+        - /TF1/Frames1
       Splitter Ratio: 0.5
     Tree Height: 549
   - Class: rviz/Selection
@@ -274,9 +275,11 @@ Visualization Manager:
         base_imu:
           Value: false
         base_left:
-          Value: true
+          Value: false
         base_link:
           Value: true
+        base_right:
+          Value: false
         camera_accel_frame:
           Value: false
         camera_accel_optical_frame:
@@ -309,6 +312,8 @@ Visualization Manager:
           Value: false
         caster_link:
           Value: false
+        hat_marker:
+          Value: true
         laser:
           Value: false
         link_arm_l0:
@@ -359,10 +364,20 @@ Visualization Manager:
           Value: false
         link_wrist_yaw:
           Value: false
+        map:
+          Value: true
+        odom:
+          Value: true
         respeaker_base:
           Value: false
-        wrist_inside:
+        shoulder_top:
+          Value: false
+        unknown:
           Value: true
+        wrist_inside:
+          Value: false
+        wrist_top:
+          Value: false
       Marker Alpha: 1
       Marker Scale: 1
       Name: TF
@@ -370,74 +385,86 @@ Visualization Manager:
       Show Axes: true
       Show Names: true
       Tree:
-        base_link:
-          base_imu:
-            {}
-          caster_link:
-            {}
-          laser:
-            {}
-          link_aruco_left_base:
-            {}
-          link_aruco_right_base:
-            {}
-          link_left_wheel:
-            {}
-          link_mast:
-            link_head:
-              link_head_pan:
-                link_head_tilt:
-                  camera_bottom_screw_frame:
-                    camera_link:
-                      camera_accel_frame:
-                        camera_accel_optical_frame:
-                          {}
-                      camera_aligned_depth_to_color_frame:
-                        {}
-                      camera_color_frame:
-                        camera_color_optical_frame:
-                          base_left:
-                            {}
-                          wrist_inside:
-                            {}
-                      camera_depth_frame:
-                        camera_depth_optical_frame:
-                          {}
-                      camera_gyro_frame:
-                        camera_gyro_optical_frame:
-                          {}
-                      camera_infra1_frame:
-                        camera_infra1_optical_frame:
-                          {}
-                      camera_infra2_frame:
-                        camera_infra2_optical_frame:
-                          {}
-            link_lift:
-              link_arm_l4:
-                link_arm_l3:
-                  link_arm_l2:
-                    link_arm_l1:
-                      link_arm_l0:
-                        link_aruco_inner_wrist:
-                          {}
-                        link_aruco_top_wrist:
-                          {}
-                        link_wrist_yaw:
-                          link_gripper:
-                            link_grasp_center:
-                              {}
-                            link_gripper_finger_left:
-                              link_gripper_fingertip_left:
-                                {}
-                            link_gripper_finger_right:
-                              link_gripper_fingertip_right:
-                                {}
-              link_aruco_shoulder:
+        map:
+          odom:
+            base_link:
+              base_imu:
                 {}
-            respeaker_base:
-              {}
-          link_right_wheel:
-            {}
+              caster_link:
+                {}
+              laser:
+                {}
+              link_aruco_left_base:
+                {}
+              link_aruco_right_base:
+                {}
+              link_left_wheel:
+                {}
+              link_mast:
+                link_head:
+                  link_head_pan:
+                    link_head_tilt:
+                      camera_bottom_screw_frame:
+                        camera_link:
+                          camera_accel_frame:
+                            camera_accel_optical_frame:
+                              {}
+                          camera_aligned_depth_to_color_frame:
+                            camera_color_optical_frame:
+                              base_left:
+                                {}
+                              base_right:
+                                {}
+                              hat_marker:
+                                {}
+                              shoulder_top:
+                                {}
+                              unknown:
+                                {}
+                              wrist_inside:
+                                {}
+                              wrist_top:
+                                {}
+                          camera_color_frame:
+                            {}
+                          camera_depth_frame:
+                            camera_depth_optical_frame:
+                              {}
+                          camera_gyro_frame:
+                            camera_gyro_optical_frame:
+                              {}
+                          camera_infra1_frame:
+                            camera_infra1_optical_frame:
+                              {}
+                          camera_infra2_frame:
+                            camera_infra2_optical_frame:
+                              {}
+                link_lift:
+                  link_arm_l4:
+                    link_arm_l3:
+                      link_arm_l2:
+                        link_arm_l1:
+                          link_arm_l0:
+                            link_aruco_inner_wrist:
+                              {}
+                            link_aruco_top_wrist:
+                              {}
+                            link_wrist_yaw:
+                              link_gripper:
+                                link_grasp_center:
+                                  {}
+                                link_gripper_finger_left:
+                                  link_gripper_fingertip_left:
+                                    {}
+                                link_gripper_finger_right:
+                                  link_gripper_fingertip_right:
+                                    {}
+                  link_aruco_shoulder:
+                    {}
+                respeaker_base:
+                  {}
+              link_right_wheel:
+                {}
       Update Interval: 0
       Value: true
     - Class: rviz/MarkerArray
@@ -504,7 +531,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 2.367870807647705
+      Distance: 3.6722378730773926
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -520,9 +547,9 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.49039900302886963
+      Pitch: 0.2653990387916565
       Target Frame: <Fixed Frame>
-      Yaw: 0.22041615843772888
+      Yaw: 0.8454164862632751
     Saved: ~
 Window Geometry:
   Displays:
@@ -541,4 +568,4 @@ Window Geometry:
     collapsed: true
   Width: 1200
   X: 456
-  Y: 85
+  Y: 27
