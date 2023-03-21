@@ -26,9 +26,11 @@ class GraspOffFloor(hm.HelloNode):
         message = "unknown error"
         tf_wrt_map = None
 
+        rospy.loginfo("moving lift up")
         self.move_to_pose({'joint_lift': 0.2})
 
         try:
+            rospy.loginfo("first attempt to find marker")
             gml_response = self.trigger_get_marker_location(GetMarkerLocationRequest())
             if gml_response.success == True:
                 success = True
@@ -37,7 +39,9 @@ class GraspOffFloor(hm.HelloNode):
             else:
                 if "haven't seen" in gml_response.message:
                     # Robot hasn't searched for the marker yet
+                    rospy.loginfo("head scan for marker")
                     self.trigger_marker_scan(TriggerRequest())
+                    rospy.loginfo("second attempt to find marker")
                     gml_response2 = self.trigger_get_marker_location(GetMarkerLocationRequest())
                     if gml_response2.success == True:
                         success = True
@@ -48,6 +52,7 @@ class GraspOffFloor(hm.HelloNode):
             message = "Exception while searching for marker location."
 
         try:
+            rospy.loginfo("funmap reaching to grasp point")
             trigger_response = self.trigger_reach_to_point(FUNMAPReachToPointRequest(tf_wrt_map=tf_wrt_map))
             if trigger_response.success == False:
                 message = trigger_response.message
