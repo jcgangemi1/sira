@@ -72,7 +72,7 @@ class GraspOffFloor(hm.HelloNode):
             '/marker_locator/marker_scan', Trigger
         )
         self.trigger_reach_to_point = rospy.ServiceProxy(
-            '/funmap/trigger_reach_to_point', Trigger
+            '/funmap/trigger_reach_to_point', FUNMAPReachToPoint
         )
 
         rate = rospy.Rate(self.rate)
