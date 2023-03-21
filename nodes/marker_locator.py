@@ -11,6 +11,7 @@ from visualization_msgs.msg import MarkerArray
 from geometry_msgs.msg import TransformStamped
 
 #Triggers
+from std_srvs.srv import Trigger, TriggerRequest, TriggerResponse
 from cyra.srv import GetMarkerLocation, GetMarkerLocationRequest, GetMarkerLocationResponse
 
 
@@ -51,6 +52,23 @@ class MarkerLocator(hm.HelloNode):
             message=message
         )
 
+    def marker_scan_callback(self, request):
+        success = False
+        message = "unknown error"
+
+        try:
+            self.trigger_head_scan(TriggerRequest())
+            success = True
+            message = ""
+        except:
+            success = False
+            message = "Head scanning via '/funmap/trigger_local_localization' failed"
+
+        return TriggerResponse(
+            success=success,
+            message=message
+        )
+
     def main(self):
         hm.HelloNode.main(self, 'marker_locator', 'marker_locator', wait_for_first_pointcloud=True)
 
@@ -58,6 +76,10 @@ class MarkerLocator(hm.HelloNode):
         rospy.Service('/marker_locator/get_marker_location',
                       GetMarkerLocation,
                       self.get_marker_location_callback)
+        rospy.Service('/marker_locator/marker_scan',
+                      Trigger,
+                      self.marker_scan_callback)
+        self.trigger_head_scan = rospy.ServiceProxy('/funmap/trigger_local_localization', Trigger)
 
         rate = rospy.Rate(self.rate)
         while not rospy.is_shutdown():
