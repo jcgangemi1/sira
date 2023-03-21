@@ -2,8 +2,9 @@
 
 # ROS
 import rospy
-import hello_helpers.hello_misc as hm
 import argparse
+import hello_helpers.hello_misc as hm
+from tf2_ros import StaticTransformBroadcaster
 
 # Messages
 from std_msgs.msg import Float32, Int8
@@ -18,18 +19,33 @@ from cyra.srv import GetMarkerLocation, GetMarkerLocationRequest, GetMarkerLocat
 class MarkerLocator(hm.HelloNode):
     def __init__(self, marker_name):
         hm.HelloNode.__init__(self)
-
-        # Config
         self.rate = 10
         self.marker_name = marker_name
         self.marker_tf = None
+        self.already_marker_scanned = False
 
     def marker_array_callback(self, marker_array_msg):
         rospy.logdebug("MarkerArray Message: ")
         rospy.logdebug(marker_array_msg)
         for marker in marker_array_msg.markers:
             if marker.text == self.marker_name:
-                marker_transform_stamped_msg = self.get_tf('map', self.marker_name)
+                # publish static transform 2cm along x axis
+                marker_offsetted = TransformStamped()
+                marker_offsetted.header.stamp = rospy.Time.now()
+                marker_offsetted.header.frame_id = self.marker_name
+                marker_offsetted.child_frame_id = f"{self.marker_name}_grasp_point"
+
+                marker_offsetted.transform.translation.x = 0.08
+                marker_offsetted.transform.translation.y = 0.0
+                marker_offsetted.transform.translation.z = 0.0
+                marker_offsetted.transform.rotation.x = 0.0
+                marker_offsetted.transform.rotation.y = 0.0
+                marker_offsetted.transform.rotation.z = 0.0
+                marker_offsetted.transform.rotation.w = 1.0
+                self.br.sendTransform([marker_offsetted])
+
+                # get grasp point
+                marker_transform_stamped_msg = self.get_tf('map', f"{self.marker_name}_grasp_point")
                 rospy.logdebug("FOUND MARKER: ")
                 rospy.logdebug(marker_transform_stamped_msg)
                 self.marker_tf = marker_transform_stamped_msg
@@ -40,7 +56,10 @@ class MarkerLocator(hm.HelloNode):
         message = "unknown error"
 
         if self.marker_tf is None:
-            message = f"haven't seen {self.marker_name} yet"
+            if self.already_marker_scanned:
+                message = f"didn't see {self.marker_name}"
+            else:
+                message = f"haven't seen {self.marker_name} yet"
         else:
             success = True
             tf_wrt_map = self.marker_tf
@@ -60,6 +79,7 @@ class MarkerLocator(hm.HelloNode):
             self.trigger_head_scan(TriggerRequest())
             success = True
             message = ""
+            self.already_marker_scanned = True
         except:
             success = False
             message = "Head scanning via '/funmap/trigger_local_localization' failed"
@@ -72,6 +92,7 @@ class MarkerLocator(hm.HelloNode):
     def main(self):
         hm.HelloNode.main(self, 'marker_locator', 'marker_locator', wait_for_first_pointcloud=True)
 
+        self.br = StaticTransformBroadcaster()
         rospy.Subscriber('/aruco/marker_array', MarkerArray, self.marker_array_callback)
         rospy.Service('/marker_locator/get_marker_location',
                       GetMarkerLocation,

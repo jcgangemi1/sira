@@ -314,6 +314,8 @@ Visualization Manager:
           Value: false
         hat_marker:
           Value: true
+        hat_marker_grasp_point:
+          Value: false
         laser:
           Value: false
         link_arm_l0:
@@ -370,13 +372,7 @@ Visualization Manager:
           Value: true
         respeaker_base:
           Value: false
-        shoulder_top:
-          Value: false
-        unknown:
-          Value: true
         wrist_inside:
-          Value: false
-        wrist_top:
           Value: false
       Marker Alpha: 1
       Marker Scale: 1
@@ -416,14 +412,9 @@ Visualization Manager:
                               base_right:
                                 {}
                               hat_marker:
-                                {}
-                              shoulder_top:
-                                {}
-                              unknown:
-                                {}
+                                hat_marker_grasp_point:
+                                  {}
                               wrist_inside:
-                                {}
-                              wrist_top:
                                 {}
                           camera_color_frame:
                             {}
@@ -531,7 +522,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 3.6722378730773926
+      Distance: 2.851529598236084
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -539,17 +530,17 @@ Visualization Manager:
         Value: false
       Field of View: 0.7853981852531433
       Focal Point:
-        X: -0.4390215277671814
-        Y: -0.37490397691726685
-        Z: 0.5231606960296631
+        X: 0.6570563912391663
+        Y: -0.11708495020866394
+        Z: -0.25068166851997375
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.2653990387916565
+      Pitch: 0.9203987121582031
       Target Frame: <Fixed Frame>
-      Yaw: 0.8454164862632751
+      Yaw: 1.910417914390564
     Saved: ~
 Window Geometry:
   Displays:
