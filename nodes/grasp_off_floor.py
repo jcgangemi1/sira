@@ -13,17 +13,20 @@ from geometry_msgs.msg import TransformStamped
 #Triggers
 from std_srvs.srv import Trigger, TriggerRequest, TriggerResponse
 from cyra.srv import GetMarkerLocation, GetMarkerLocationRequest, GetMarkerLocationResponse
+from cyra.srv import FUNMAPReachToPoint, FUNMAPReachToPointRequest, FUNMAPReachToPointResponse
 
 
 class GraspOffFloor(hm.HelloNode):
-    def __init__(self, marker_name):
+    def __init__(self):
         hm.HelloNode.__init__(self)
         self.rate = 10
 
-    def trigger_grasp_marker_callback(self):
+    def trigger_grasp_marker_callback(self, request):
         success = False
         message = "unknown error"
         tf_wrt_map = None
+
+        self.move_to_pose({'joint_lift': 0.2})
 
         try:
             gml_response = self.trigger_get_marker_location(GetMarkerLocationRequest())
@@ -44,7 +47,12 @@ class GraspOffFloor(hm.HelloNode):
         except:
             message = "Exception while searching for marker location."
 
-        # TODO
+        try:
+            trigger_response = self.trigger_reach_to_point(FUNMAPReachToPointRequest(tf_wrt_map=tf_wrt_map))
+            if trigger_response.success == False:
+                message = trigger_response.message
+        except:
+            message = "Exception while trying to reach to grasp point"
 
         return TriggerResponse(
             success=success,
@@ -63,6 +71,9 @@ class GraspOffFloor(hm.HelloNode):
         self.trigger_marker_scan = rospy.ServiceProxy(
             '/marker_locator/marker_scan', Trigger
         )
+        self.trigger_reach_to_point = rospy.ServiceProxy(
+            '/funmap/trigger_reach_to_point', Trigger
+        )
 
         rate = rospy.Rate(self.rate)
         while not rospy.is_shutdown():
@@ -71,6 +82,6 @@ class GraspOffFloor(hm.HelloNode):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    args = parser.parse_args()
+    args, unknown = parser.parse_known_args()
 
     GraspOffFloor().main()

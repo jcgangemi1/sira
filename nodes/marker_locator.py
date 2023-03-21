@@ -110,7 +110,7 @@ class MarkerLocator(hm.HelloNode):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("marker_name")
-    args = parser.parse_args()
+    args, unknown = parser.parse_known_args()
 
     MarkerLocator(args.marker_name).main()
 

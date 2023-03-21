@@ -66,6 +66,7 @@ find_package(catkin REQUIRED COMPONENTS
 add_service_files(
   FILES
   GetMarkerLocation.srv
+  FUNMAPReachToPoint.srv
 )
 
 ## Generate actions in the 'action' folder
