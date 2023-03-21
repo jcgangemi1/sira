@@ -23,7 +23,7 @@ class MarkerLocator(hm.HelloNode):
         self.marker_name = marker_name
         self.marker_tf = None
 
-    def marker_callback(self, marker_array_msg):
+    def marker_array_callback(self, marker_array_msg):
         rospy.logdebug("MarkerArray Message: ")
         rospy.logdebug(marker_array_msg)
         for marker in marker_array_msg.markers:
@@ -33,11 +33,31 @@ class MarkerLocator(hm.HelloNode):
                 rospy.logdebug(marker_transform_stamped_msg)
                 self.marker_tf = marker_transform_stamped_msg
 
+    def get_marker_location_callback(self, request):
+        success = False
+        tf_wrt_map = None
+        message = "unknown error"
+
+        if self.marker_tf is None:
+            message = f"haven't seen {self.marker_name} yet"
+        else:
+            success = True
+            tf_wrt_map = self.marker_tf
+            message = ""
+
+        return GetMarkerLocationResponse(
+            success=success,
+            tf_wrt_map=tf_wrt_map,
+            message=message
+        )
 
     def main(self):
         hm.HelloNode.main(self, 'marker_locator', 'marker_locator', wait_for_first_pointcloud=True)
 
-        self.marker_subscriber = rospy.Subscriber('/aruco/marker_array', MarkerArray, self.marker_callback)
+        rospy.Subscriber('/aruco/marker_array', MarkerArray, self.marker_array_callback)
+        rospy.Service('/marker_locator/get_marker_location',
+                      GetMarkerLocation,
+                      self.get_marker_location_callback)
 
         rate = rospy.Rate(self.rate)
         while not rospy.is_shutdown():
