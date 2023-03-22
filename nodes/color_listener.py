@@ -59,7 +59,7 @@ class ColorListener():
             elif "hey" in text_string:
                 rospy.loginfo("HOT WORD")
                 if "Sarah" or "Sira" in text_string:
-                    rospy.loginfo("CYRA")
+                    rospy.loginfo("SIRA")
                     soundhandle = SoundClient()
                     rospy.sleep(1)
                     soundhandle.say(text="Yes, what do you need Julia?", voice = 'voice_kal_diphone', volume = 1.0)

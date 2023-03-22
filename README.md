@@ -1,3 +1,3 @@
-cyra - something robot assistant
+sira - socially intelligent robot assistant
 --------------------------------
 

@@ -6,7 +6,7 @@
   <arg name="debug_directory" default="$(env HELLO_FLEET_PATH)/debug/" doc="directory where debug imagery is saved" />
 
   <!-- DEMO CODE -->
-  <node name="marker_locator" pkg="cyra" type="marker_locator.py" output="screen" args="$(arg marker_name)" />
+  <node name="marker_locator" pkg="sira" type="marker_locator.py" output="screen" args="$(arg marker_name)" />
   <!-- -->
 
   <!-- REALSENSE D435i -->
@@ -18,7 +18,7 @@
   <!-- -->
 
   <!-- ARUCO MARKER DETECTOR -->
-  <rosparam command="load" file="$(find cyra)/config/stretch_marker_dict.yaml" />
+  <rosparam command="load" file="$(find sira)/config/stretch_marker_dict.yaml" />
   <node name="detect_aruco_markers" pkg="stretch_core" type="detect_aruco_markers" output="screen"/>
   <!-- -->
 
@@ -47,7 +47,7 @@
   <!-- -->
 
   <!-- VISUALIZE -->
-  <node name="rviz" pkg="rviz" type="rviz" output="screen" args="-d $(find cyra)/rviz/aruco_detector.rviz" if="$(arg rviz)" />
+  <node name="rviz" pkg="rviz" type="rviz" output="screen" args="-d $(find sira)/rviz/aruco_detector.rviz" if="$(arg rviz)" />
   <!-- -->
 
 </launch>

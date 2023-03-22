@@ -12,8 +12,8 @@ from geometry_msgs.msg import TransformStamped
 
 #Triggers
 from std_srvs.srv import Trigger, TriggerRequest, TriggerResponse
-from cyra.srv import GetMarkerLocation, GetMarkerLocationRequest, GetMarkerLocationResponse
-from cyra.srv import FUNMAPReachToPoint, FUNMAPReachToPointRequest, FUNMAPReachToPointResponse
+from sira.srv import GetMarkerLocation, GetMarkerLocationRequest, GetMarkerLocationResponse
+from sira.srv import FUNMAPReachToPoint, FUNMAPReachToPointRequest, FUNMAPReachToPointResponse
 
 
 class GraspOffFloor(hm.HelloNode):
