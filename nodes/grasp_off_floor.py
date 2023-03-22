@@ -77,12 +77,23 @@ class GraspOffFloor(hm.HelloNode):
 
         # 3. Plan and move to marker's grasp point
         if success: # succeeding so far
+            attempts = 0
+            reach_to_point_success = False
             try:
-                rospy.loginfo("funmap reaching to grasp point")
-                trigger_response = self.trigger_reach_to_point(FUNMAPReachToPointRequest(tf_wrt_map=tf_wrt_map))
-                if trigger_response.success == False:
-                    success = False
-                    message = trigger_response.message
+                while reach_to_point_success == False and attempts < 3:
+                    rospy.loginfo(f"funmap reaching to grasp point attempt={attempts}")
+                    self.move_to_pose({'rotate_mobile_base': 0.2})
+                    trigger_response = self.trigger_reach_to_point(FUNMAPReachToPointRequest(tf_wrt_map=tf_wrt_map))
+                    if trigger_response.success == False:
+                        reach_to_point_success = False
+                        success = False
+                        message = trigger_response.message
+                    else:
+                        reach_to_point_success = True
+                        success = True
+                        message = ""
+                    attempts += 1
+                    rospy.sleep(1)
             except:
                 success = False
                 message = "Exception while trying to reach to grasp point"
@@ -92,6 +103,7 @@ class GraspOffFloor(hm.HelloNode):
             self.move_to_pose({'joint_lift': 0.0115})
             rospy.sleep(1)
             self.move_to_pose({'joint_gripper_finger_left': -0.288})
+            rospy.sleep(2)
             self.move_to_pose({'joint_lift': 0.5})
 
         return TriggerResponse(

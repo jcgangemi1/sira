@@ -35,7 +35,7 @@ class MarkerLocator(hm.HelloNode):
                 marker_offsetted.header.frame_id = self.marker_name
                 marker_offsetted.child_frame_id = f"{self.marker_name}_grasp_point"
 
-                marker_offsetted.transform.translation.x = 0.08
+                marker_offsetted.transform.translation.x = 0.12
                 marker_offsetted.transform.translation.y = 0.0
                 marker_offsetted.transform.translation.z = 0.0
                 marker_offsetted.transform.rotation.x = 0.0
