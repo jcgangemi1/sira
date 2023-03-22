@@ -30,6 +30,8 @@ class GraspOffFloor(hm.HelloNode):
         self.move_to_pose({'joint_lift': 0.2})
 
         try:
+            success = False
+            message = "Couldn't find marker location"
             rospy.loginfo("first attempt to find marker")
             gml_response = self.trigger_get_marker_location(GetMarkerLocationRequest())
             if gml_response.success == True:
@@ -49,8 +51,6 @@ class GraspOffFloor(hm.HelloNode):
                         success = True
                         message = ""
                         tf_wrt_map = gml_response2.tf_wrt_map
-                success = False
-                message = "Couldn't find marker location"
         except:
             success = False
             message = "Exception while searching for marker location."
@@ -65,6 +65,11 @@ class GraspOffFloor(hm.HelloNode):
             except:
                 success = False
                 message = "Exception while trying to reach to grasp point"
+
+        if success: # succeeding so far
+            self.move_to_pose({'joint_lift': 0.0215})
+            self.move_to_pose({'joint_gripper_finger_left': -0.288})
+            self.move_to_pose({'joint_lift': 0.5})
 
         return TriggerResponse(
             success=success,
