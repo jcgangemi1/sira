@@ -103,13 +103,13 @@ class MarkerLocator(hm.HelloNode):
 
         self.br = StaticTransformBroadcaster()
         rospy.Subscriber('/aruco/marker_array', MarkerArray, self.marker_array_callback)
-        rospy.Service('/marker_locator/get_marker_location',
+        rospy.Service(f'{rospy.get_name()}/get_marker_location',
                       GetMarkerLocation,
                       self.get_marker_location_callback)
-        rospy.Service('/marker_locator/marker_scan',
+        rospy.Service(f'{rospy.get_name()}/marker_scan',
                       Trigger,
                       self.marker_scan_callback)
-        rospy.Service('/marker_locator/clear_saved_locations',
+        rospy.Service(f'{rospy.get_name()}/clear_saved_locations',
                       Trigger,
                       self.clear_saved_locations_callback)
         self.trigger_head_scan = rospy.ServiceProxy('/funmap/trigger_local_localization', Trigger)

@@ -17,6 +17,11 @@
     'use_rgb_only': False
     'name': 'hat_marker'
     'link': 'None'
+  '0':
+    'length_mm': 47
+    'use_rgb_only': False
+    'name': 'julia_marker'
+    'link': 'None'
   'default':
     'length_mm': 24
     'use_rgb_only': False

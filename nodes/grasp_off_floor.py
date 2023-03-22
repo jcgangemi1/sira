@@ -118,10 +118,10 @@ class GraspOffFloor(hm.HelloNode):
                       Trigger,
                       self.trigger_grasp_marker_callback)
         self.trigger_get_marker_location = rospy.ServiceProxy(
-            '/marker_locator/get_marker_location', GetMarkerLocation
+            '/hat_locator/get_marker_location', GetMarkerLocation
         )
         self.trigger_marker_scan = rospy.ServiceProxy(
-            '/marker_locator/marker_scan', Trigger
+            '/hat_locator/marker_scan', Trigger
         )
         self.trigger_reach_to_point = rospy.ServiceProxy(
             '/funmap/trigger_reach_to_point', FUNMAPReachToPoint
