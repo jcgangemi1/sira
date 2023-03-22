@@ -33,6 +33,7 @@ class GraspOffFloor(hm.HelloNode):
             rospy.loginfo("first attempt to find marker")
             gml_response = self.trigger_get_marker_location(GetMarkerLocationRequest())
             if gml_response.success == True:
+                rospy.loginfo("success on first attempt to find marker")
                 success = True
                 message = ""
                 tf_wrt_map = gml_response.tf_wrt_map
@@ -44,20 +45,26 @@ class GraspOffFloor(hm.HelloNode):
                     rospy.loginfo("second attempt to find marker")
                     gml_response2 = self.trigger_get_marker_location(GetMarkerLocationRequest())
                     if gml_response2.success == True:
+                        rospy.loginfo("success on second attempt to find marker")
                         success = True
                         message = ""
                         tf_wrt_map = gml_response2.tf_wrt_map
+                success = False
                 message = "Couldn't find marker location"
         except:
+            success = False
             message = "Exception while searching for marker location."
 
-        try:
-            rospy.loginfo("funmap reaching to grasp point")
-            trigger_response = self.trigger_reach_to_point(FUNMAPReachToPointRequest(tf_wrt_map=tf_wrt_map))
-            if trigger_response.success == False:
-                message = trigger_response.message
-        except:
-            message = "Exception while trying to reach to grasp point"
+        if success: # succeeding so far
+            try:
+                rospy.loginfo("funmap reaching to grasp point")
+                trigger_response = self.trigger_reach_to_point(FUNMAPReachToPointRequest(tf_wrt_map=tf_wrt_map))
+                if trigger_response.success == False:
+                    success = False
+                    message = trigger_response.message
+            except:
+                success = False
+                message = "Exception while trying to reach to grasp point"
 
         return TriggerResponse(
             success=success,
