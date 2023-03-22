@@ -7,6 +7,7 @@
 
   <!-- DEMO CODE -->
   <node name="marker_locator" pkg="sira" type="marker_locator.py" output="screen" args="$(arg marker_name)" />
+  <node name="grasp_off_floor" pkg="sira" type="grasp_off_floor.py" output="screen" />
   <!-- -->
 
   <!-- REALSENSE D435i -->
