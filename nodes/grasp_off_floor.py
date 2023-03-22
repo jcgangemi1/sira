@@ -14,6 +14,7 @@ from geometry_msgs.msg import TransformStamped
 from std_srvs.srv import Trigger, TriggerRequest, TriggerResponse
 from sira.srv import GetMarkerLocation, GetMarkerLocationRequest, GetMarkerLocationResponse
 from sira.srv import FUNMAPReachToPoint, FUNMAPReachToPointRequest, FUNMAPReachToPointResponse
+from sira.srv import AddObstacle, AddObstacleRequest, AddObstacleResponse
 
 
 class GraspOffFloor(hm.HelloNode):
@@ -29,6 +30,7 @@ class GraspOffFloor(hm.HelloNode):
         rospy.loginfo("moving lift up")
         self.move_to_pose({'joint_lift': 0.2})
 
+        # 1. Find the marker location
         try:
             success = False
             message = "Couldn't find marker location"
@@ -55,6 +57,25 @@ class GraspOffFloor(hm.HelloNode):
             success = False
             message = "Exception while searching for marker location."
 
+        # 2. Add virtual obstacle on marker
+        if success:
+            try:
+                rospy.loginfo("adding virtual obstacle on marker")
+                req = AddObstacleRequest()
+                req.header.stamp = tf_wrt_map.header.stamp
+                req.header.frame_id = tf_wrt_map.header.frame_id
+                req.x_m = tf_wrt_map.transform.translation.x
+                req.y_m = tf_wrt_map.transform.translation.y
+                add_obstacle_response = self.trigger_add_obstacle(req)
+                if add_obstacle_response.success == True:
+                    rospy.loginfo("success on adding virtual obstacle on marker")
+                    success = True
+                    message = ""
+            except:
+                success = False
+                message = "Exception while adding obstacle to MHI"
+
+        # 3. Plan and move to marker's grasp point
         if success: # succeeding so far
             try:
                 rospy.loginfo("funmap reaching to grasp point")
@@ -66,6 +87,7 @@ class GraspOffFloor(hm.HelloNode):
                 success = False
                 message = "Exception while trying to reach to grasp point"
 
+        # 4. Pick up hat
         if success: # succeeding so far
             self.move_to_pose({'joint_lift': 0.0115})
             rospy.sleep(1)
@@ -91,6 +113,9 @@ class GraspOffFloor(hm.HelloNode):
         )
         self.trigger_reach_to_point = rospy.ServiceProxy(
             '/funmap/trigger_reach_to_point', FUNMAPReachToPoint
+        )
+        self.trigger_add_obstacle = rospy.ServiceProxy(
+            '/funmap/trigger_add_obstacle', AddObstacle
         )
 
         rate = rospy.Rate(self.rate)

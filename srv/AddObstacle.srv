@@ -1,0 +1,6 @@
+std_msgs/Header header
+float64 x_m
+float64 y_m
+---
+bool success                              # indicate successful run of triggered service
+string message                            # informational, e.g. for error messages

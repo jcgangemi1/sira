@@ -67,6 +67,7 @@ add_service_files(
   FILES
   GetMarkerLocation.srv
   FUNMAPReachToPoint.srv
+  AddObstacle.srv
 )
 
 ## Generate actions in the 'action' folder
