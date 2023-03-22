@@ -67,7 +67,8 @@ class GraspOffFloor(hm.HelloNode):
                 message = "Exception while trying to reach to grasp point"
 
         if success: # succeeding so far
-            self.move_to_pose({'joint_lift': 0.0215})
+            self.move_to_pose({'joint_lift': 0.0115})
+            rospy.sleep(1)
             self.move_to_pose({'joint_gripper_finger_left': -0.288})
             self.move_to_pose({'joint_lift': 0.5})
 
