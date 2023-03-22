@@ -104,7 +104,7 @@ class GraspOffFloor(hm.HelloNode):
             rospy.sleep(1)
             self.move_to_pose({'joint_gripper_finger_left': -0.288})
             rospy.sleep(2)
-            self.move_to_pose({'joint_lift': 0.5})
+            self.move_to_pose({'joint_lift': 0.6})
 
         return TriggerResponse(
             success=success,

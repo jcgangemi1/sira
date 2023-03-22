@@ -35,13 +35,22 @@ class MarkerLocator(hm.HelloNode):
                 marker_offsetted.header.frame_id = self.marker_name
                 marker_offsetted.child_frame_id = f"{self.marker_name}_grasp_point"
 
-                marker_offsetted.transform.translation.x = 0.12
-                marker_offsetted.transform.translation.y = 0.0
-                marker_offsetted.transform.translation.z = 0.0
-                marker_offsetted.transform.rotation.x = 0.0
-                marker_offsetted.transform.rotation.y = 0.0
-                marker_offsetted.transform.rotation.z = 0.0
-                marker_offsetted.transform.rotation.w = 1.0
+                if "julia" in rospy.get_name():
+                    marker_offsetted.transform.translation.x = 0.0
+                    marker_offsetted.transform.translation.y = 0.0
+                    marker_offsetted.transform.translation.z = 0.45
+                    marker_offsetted.transform.rotation.x = 0.0
+                    marker_offsetted.transform.rotation.y = 0.0
+                    marker_offsetted.transform.rotation.z = 0.0
+                    marker_offsetted.transform.rotation.w = 1.0
+                else:
+                    marker_offsetted.transform.translation.x = 0.12
+                    marker_offsetted.transform.translation.y = 0.0
+                    marker_offsetted.transform.translation.z = 0.0
+                    marker_offsetted.transform.rotation.x = 0.0
+                    marker_offsetted.transform.rotation.y = 0.0
+                    marker_offsetted.transform.rotation.z = 0.0
+                    marker_offsetted.transform.rotation.w = 1.0
                 self.br.sendTransform([marker_offsetted])
 
                 # get grasp point
@@ -112,7 +121,10 @@ class MarkerLocator(hm.HelloNode):
         rospy.Service(f'{rospy.get_name()}/clear_saved_locations',
                       Trigger,
                       self.clear_saved_locations_callback)
-        self.trigger_head_scan = rospy.ServiceProxy('/funmap/trigger_local_localization', Trigger)
+        if "julia" in rospy.get_name():
+            self.trigger_head_scan = rospy.ServiceProxy('/funmap/trigger_localup_localization', Trigger)
+        else:
+            self.trigger_head_scan = rospy.ServiceProxy('/funmap/trigger_local_localization', Trigger)
 
         rate = rospy.Rate(self.rate)
         while not rospy.is_shutdown():
