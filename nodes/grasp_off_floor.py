@@ -83,7 +83,7 @@ class GraspOffFloor(hm.HelloNode):
                 while reach_to_point_success == False and attempts < 3:
                     rospy.loginfo(f"funmap reaching to grasp point attempt={attempts}")
                     self.move_to_pose({'rotate_mobile_base': 0.2})
-                    trigger_response = self.trigger_reach_to_point(FUNMAPReachToPointRequest(tf_wrt_map=tf_wrt_map))
+                    trigger_response = self.trigger_reach_to_point(FUNMAPReachToPointRequest(tf_wrt_map=tf_wrt_map, reverse_arm=False))
                     if trigger_response.success == False:
                         reach_to_point_success = False
                         success = False

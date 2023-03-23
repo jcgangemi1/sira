@@ -1,4 +1,5 @@
 geometry_msgs/TransformStamped tf_wrt_map
+bool reverse_arm
 ---
 bool success                              # indicate successful run of triggered service
 string message                            # informational, e.g. for error messages
