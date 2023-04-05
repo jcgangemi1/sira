@@ -51,7 +51,7 @@
   <!-- -->
 
   <!-- VISUALIZE -->
-  <node name="rviz" pkg="rviz" type="rviz" output="screen" args="-d $(find sira)/rviz/aruco_detector.rviz" if="$(arg rviz)" />
+  <node name="rviz" pkg="rviz" type="rviz" output="screen" args="-d $(find sira)/rviz/hat_pickup.rviz" if="$(arg rviz)" />
   <!-- -->
 
 </launch>
