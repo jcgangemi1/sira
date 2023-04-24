@@ -9,7 +9,7 @@ The ArUco Marker detection node is utilized for this demo.  An ArUco marker is a
 
 ![image](https://user-images.githubusercontent.com/87331189/234057458-bbacafe4-9a56-442e-9ff3-80e2037acd54.png)
 
-Stretch has the ability to search for and detect these markers.  You can place them on objects or in specific areas so that the robot has an easier time identifying things.  More information on Stretch's ArUco Marker detection can be found here: [ArUco Marker Detection](https://docs.hello-robot.com/0.2/stretch-tutorials/ros1/aruco_marker_detection/)
+Stretch has the ability to search for and detect these markers.  For more information on ArUco markers, follow [this link](https://docs.opencv.org/4.x/d5/dae/tutorial_aruco_detection.html).  You can place them on objects or in specific areas so that the robot has an easier time identifying things.  More information on Stretch's ArUco Marker detection can be found here: [ArUco Marker Detection](https://docs.hello-robot.com/0.2/stretch-tutorials/ros1/aruco_marker_detection/).  
 
 # Use
 --------------------------------
