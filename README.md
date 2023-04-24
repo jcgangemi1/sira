@@ -2,13 +2,22 @@
 --------------------------------
 Our lab is motivated to increase functional independence in those with high level spinal cord injuries.  We believe autonomous robots, like Hello Robot’s Stretch model, could be a key part of regaining functional independence and increasing quality of life.  For example, someone who is paralyzed may have trouble picking things up from the ground, or they may rely on somebody else to accomplish this task for them.  However, SIRA is able to pick an object up from the ground and hand it over to the person, eliminating the need for a caregiver and giving them a sense of independence they had previously lost.
 
+# Background Nodes
+--------------------------------
+## ArUco Marker Detection
+The ArUco Marker detection node is utilized for this demo.  An ArUco marker is a black and white square image that can be used to identify things with computer vision (similar to a QR code).  An image of one is shown below: 
+
+![image](https://user-images.githubusercontent.com/87331189/234057458-bbacafe4-9a56-442e-9ff3-80e2037acd54.png)
+
+Stretch has the ability to search for and detect these markers.  You can place them on objects or in specific areas so that the robot has an easier time identifying things.  More information on Stretch's ArUco Marker detection can be found here: [ArUco Marker Detection](https://docs.hello-robot.com/0.2/stretch-tutorials/ros1/aruco_marker_detection/)
+
 # USE 
 --------------------------------
 ## Pickup Hat Demo
 
-First, SIRA must be operated untethered.  See the untethered operation guide if you need help.
+First, SIRA must be operated untethered.  See the untethered operation guide if you need help, it can be found here: [Untethered Operation Guide](https://docs.hello-robot.com/0.2/stretch-tutorials/getting_started/untethered_operation/#ros-remote-master).
 
-Then, you must map the robot to its environment, if you have not already done so.  In order to do this, follow the FUNMAP mapping instructions.  If you have already done this, make sure you have the name of the map ready.  It should look something like merged_map_20230405112159.  
+Then, you must map the robot to its environment, if you have not already done so.  In order to do this, follow the FUNMAP mapping instructions: [Stretch FUNMAP Guide](https://github.com/hello-robot/stretch_ros/tree/master/stretch_funmap).  If you have already done this, make sure you have the name of the map ready.  It should look something like merged_map_20230405112159.  
 
 You are ready to start the demo, run the following command in a terminal: 
 ```
