@@ -11,7 +11,7 @@ The ArUco Marker detection node is utilized for this demo.  An ArUco marker is a
 
 Stretch has the ability to search for and detect these markers.  You can place them on objects or in specific areas so that the robot has an easier time identifying things.  More information on Stretch's ArUco Marker detection can be found here: [ArUco Marker Detection](https://docs.hello-robot.com/0.2/stretch-tutorials/ros1/aruco_marker_detection/)
 
-# USE 
+# Use
 --------------------------------
 ## Pickup Hat Demo
 
@@ -89,9 +89,11 @@ rosservice call /handover_to_julia/trigger_handover "{}"
 ```
 This should have the robot plan a path to the person, then execute and handover the hat to right in front of their Aruco marker. 
 
-IMPORTANT: This Demo was done with Julia, but can be done with anyone wearing the Aruco marker tag, none of the commands change. 
+# Important Tips
 
-IMPORTANT: At any time, you can use the command 
+This Demo was done with Julia, but can be done with anyone wearing the Aruco marker tag, none of the commands change. 
+
+At any time, you can use the command 
 ```
 rosservice list 
 ```
