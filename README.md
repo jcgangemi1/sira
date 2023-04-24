@@ -25,11 +25,13 @@ roslaunch sira hat_pickup.launch map_yaml:=/home/hello-robot/stretch_user/debug/
 ```
 Where merged_map_name is the correct map for the environment from the last step. 
 
-Then, open rviz using the following command 
+Then, open RVIZ using the following command 
 ```
 rviz -d $(rospack find sira)/rviz/hat_pickup.rviz 
 ```
-This will open rviz with the correct vizualization of the environment. 
+This will open RVIZ with the correct vizualization of the environment.
+
+![Screenshot 2023-04-24 124421](https://user-images.githubusercontent.com/87331189/234063502-dedeb7b7-2d21-462a-b7da-a01c4db7dfa4.png)
 
 You can always manually keyboard teleop Stretch around (e.g. during the mapping step or during the hat pickup demo if FUNMAP fails to find a valid base plan). A menu for keyboard teleop prints in the terminal if you press a key like '4'. 
 
@@ -37,9 +39,11 @@ You must then localize SIRA using the following command in another terminal:
 ```
 rosservice call /funmap/trigger_global_localization "{}" 
 ```
-This should complete before anything else (it takes a few minutes). 
+This should complete before anything else (it takes a few minutes).  The mapping of the environment in RVIZ should now reflect the actual environment.
 
-Now, the demo is ready to initiate.  First the hat needs to be located.  Use the commands: 
+![Screenshot 2023-04-24 124442](https://user-images.githubusercontent.com/87331189/234063830-ba259a14-fe5a-4b66-bc49-6ed5584cca14.png)
+
+Now, the demo is ready to initiate.  First the hat needs to be placed and located located.  Use the commands: 
 ```
 rosservice call /hat_locator/clear_saved_locations 
 ``` 
@@ -52,13 +56,17 @@ Next, we want to make sure that the robot saw the hat.  Use the command:
 ```
 rosservice call /hat_locator/get_marker_location 
 ```
-in order to see if we successfully located the hat.  The success message should say True. 
+in order to see if we successfully located the hat.  The success message should say True. The hat location should be shown in RVIZ as well.
+
+![Screenshot 2023-04-24 124529](https://user-images.githubusercontent.com/87331189/234064283-86e85463-ddd8-4707-8584-195317e7352e.png)
 
 Now, we want to try and pick up the hat.  Use the command: 
 ```
 rosservice call /grasp_off_floor/trigger_grasp_marker "{}" 
 ```
-This should have the robot plan a path to the hat, then execute and grab the hat.  If the plan fails, it will reposition base and try again twice before giving up.  Note: sometimes it does give up even after three tries, we have found usually if you manually teleoperate the base a few inches forward or back then try again, it will have an easier time the next try. 
+This should have the robot plan a path to the hat, then execute and grab the hat.  If the plan fails, it will reposition base and try again twice before giving up.  Note: sometimes it does give up even after three tries, we have found usually if you manually teleoperate the base a few inches forward or back then try again, it will have an easier time the next try.  If the plan is successful, you will see the path displayed in RVIZ.
+
+![Screenshot 2023-04-24 124623](https://user-images.githubusercontent.com/87331189/234064412-be6fc235-5b91-4577-badb-2bdf59b3080b.png)
 
 Next, we need to locate the person to hand the hat over to, run the following commands: 
 ```
