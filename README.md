@@ -89,6 +89,8 @@ rosservice call /handover_to_julia/trigger_handover "{}"
 ```
 This should have the robot plan a path to the person, then execute and handover the hat to right in front of their Aruco marker. 
 
+![SIRAclip](https://user-images.githubusercontent.com/87331189/234917651-70ea36c7-07f6-4308-ba4f-f4f40d741313.png)
+
 # Important Tips
 
 This Demo was done with Julia, but can be done with anyone wearing the Aruco marker tag, none of the commands change. 
