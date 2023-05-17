@@ -30,7 +30,7 @@
   <!-- -->
 
   <!-- MAIN -->
-  <!-- <node name="color_listener" pkg="stretch_demos" type="color_listener.py" output="screen"/> -->
+  <node name="color_listener" pkg="sira" type="color_listener.py" output="screen"/>
   <node name="soundplay_node" pkg="sound_play" type="soundplay_node.py" output="screen"/>
   <!-- -->
 
